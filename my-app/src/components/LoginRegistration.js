@@ -15,6 +15,7 @@ const LoginRegistration = () => {
       <div className="rounded-lg p-9 shadow-lg">
         {isSignIn ? (
           <SignIn />
+          
         ) : (
           <Registration />
         )}

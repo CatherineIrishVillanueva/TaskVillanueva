@@ -13,14 +13,15 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
         <Route path="/welcome" component={Welcome} />
+        <Route path="/" render={() => (
+          <div className="App gradient-gray h-screen w-screen relative flex justify-center items-center">
+            <div className="flex flex-col items-center justify-center py-2 bg-gray-10 bg-opacity-10 rounded-2xl shadow-5xl relative z-2 border border-opacity-30 border-r-0 border-b-0 backdrop-filter backdrop-blur-sm">
+              <LoginRegistration />
+            </div>
+          </div>
+        )} /> 
       </Switch>
-      <div className="App gradient-gray h-screen w-screen relative flex justify-center items-center">
-        <div className="flex flex-col items-center justify-center py-2 bg-gray-10 bg-opacity-10 rounded-2xl shadow-5xl relative z-2 border border-opacity-30 border-r-0 border-b-0 backdrop-filter backdrop-blur-sm">
-          <LoginRegistration />
-        </div>
-      </div>
     </Router>
-
   );
 }
 
