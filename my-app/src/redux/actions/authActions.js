@@ -5,8 +5,7 @@ export const signUp = (userData) => (dispatch) => {
   const storedUserData = JSON.parse(localStorage.getItem('userData'));
 
   if (storedUserData && (userData.email === storedUserData.email || userData.mobile === storedUserData.mobile)) {
-    alert('Email or mobile number is already used!');
-    return false;
+    return 'Email or mobile number is already used!😢';
   }
 
   const encryptedPassword = encryptPassword(userData.password);
@@ -19,7 +18,7 @@ export const signUp = (userData) => (dispatch) => {
     payload: userData,
   });
 
-  return true;
+  return null; 
 };
 
 
@@ -38,18 +37,13 @@ export const signIn = (userData) => (dispatch) => {
           type: SIGN_IN,
           payload: storedUserData.email,
         });
-        return true;
+        return null; 
       } else {
-        alert('Incorrect email or password!');
-        return false;
+        return "Email/Mobile or Password didn't Match!";
       }
     } else {
-      alert("Email/Mobile or Password didn't Match!");
-      return false;
+      return "User not found.";
     }
-  } else {
-    alert('User not found');
-    return false;
   }
 };
 
@@ -60,4 +54,4 @@ const encryptPassword = (password) => {
 const decryptPassword = (encryptedPassword) => {
   const bytes = CryptoJS.AES.decrypt(encryptedPassword, '!`%*^');
   return bytes.toString(CryptoJS.enc.Utf8);
-}; 
+};

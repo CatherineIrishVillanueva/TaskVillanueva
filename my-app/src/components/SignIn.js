@@ -4,6 +4,10 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { signIn } from '../redux/actions/authActions';
 import { useHistory } from 'react-router-dom';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignIn } from '@fortawesome/free-solid-svg-icons';
 
 const SignInSchema = Yup.object().shape({
   emailOrMobile: Yup.string().required("Mobile Number or Email is required"),
@@ -15,11 +19,21 @@ const SignIn = () => {
   const history = useHistory();
 
   const handleSubmit = async (values) => {
-    const signInSuccess = await dispatch(signIn(values));
-    if (signInSuccess) {
+    const error = await dispatch(signIn(values));
+    if (!error) {
       history.push("/welcome");
     } else {
-
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
     }
   };
 
@@ -35,14 +49,16 @@ const SignIn = () => {
       >
         {({ errors, touched }) => (
           <Form className="">
-            <h2 className="text-2xl mb-4 text-center font-bold text-white">Login</h2>
+            <div class="mb-4">
+              <h2 class="text-2xl text-center font-bold text-black typing-text">Login</h2>
+            </div>
             <div className="mb-4">
               <Field
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="emailOrMobile"
                 name="emailOrMobile"
                 type="text"
-                placeholder="Enter Email or Mobile Number"
+                placeholder="Enter Email/Mobile Number"
                 autoComplete="off"
               />
               {errors.emailOrMobile && touched.emailOrMobile && <div className="text-red-500">{errors.emailOrMobile}</div>}
@@ -63,11 +79,15 @@ const SignIn = () => {
 
             <div className='text-center'>
               <button
-                className="bg-blue-500 align-item-center hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-blue-500 align-item-center hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
+                style={{ fontSize: '18px' }}
+                title={'Click to Login'}
               >
                 Login
+                <FontAwesomeIcon icon={faSignIn} className="text-green-300" style={{ width: '19px', height: '19px', marginLeft: '4px' }} />
               </button>
+              <ToastContainer />
             </div>
           </Form>
         )}

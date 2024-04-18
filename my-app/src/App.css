@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-.gradient-gray {
-  background: linear-gradient(to bottom right, lightblue, #ffb347, lightpink);
+.gradient-grey {
+  background: linear-gradient(to bottom right, lightblue, lavenderblush, lightpink);
+}
+
+@keyframes typingAnimation {
+  0% { width: 0; margin: auto; }
+  100% { width: 100%; margin: auto; }
+}
+
+.typing-text {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typingAnimation 5s steps(90, end);
+  display: block;
+}
+
+.fade-in {
+  animation: fadeInAnimation 1s ease-in-out;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

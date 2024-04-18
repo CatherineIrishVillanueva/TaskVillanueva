@@ -3,31 +3,52 @@ import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { signUp } from '../redux/actions/authActions';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 const SignUpSchema = Yup.object().shape({
   name: Yup.string().min(3).required("Please Enter Name"),
-  mobile: Yup.number().min(11).required("Please Enter Mobile Number"),
+  mobile: Yup.string().matches(/^[0-9]+$/, "Mobile number must contain only digits").min(11, "Mobile number must be at least 11 digits").required("Please Enter Mobile Number"),
   email: Yup.string().email("Please Enter Valid Email").required("Please Enter Email"),
   address: Yup.string().required("Please Enter Address"),
   gender: Yup.string().required("Please Select Gender"),
   password: Yup.string().min(8).required("Please Enter Password"),
   birthdate: Yup.date().required("Please Enter Birthdate")
-
 });
 
 const SignUp = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (values, { resetForm }) => {
-    const success = await dispatch(signUp(values));
-    if (success) {
+    const error = await dispatch(signUp(values));
+    if (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    } else {
       resetForm();
-      alertUser();
+      toast.success('✨ Account Registration Successfully! ✨', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
     }
-  };
-
-  const alertUser = () => {
-    alert('Form submitted successfully!');
   };
 
   return (
@@ -41,14 +62,15 @@ const SignUp = () => {
           gender: '',
           password: '',
           birthdate: '',
-
         }}
         validationSchema={SignUpSchema}
         onSubmit={handleSubmit}
       >
         {({ errors, touched }) => (
           <Form className="">
-            <h2 className="text-2xl mb-4 text-center font-bold text-white">Registration</h2>
+            <div class="mb-4">
+              <h2 class="text-2xl text-center font-bold text-black typing-text">Registration</h2>
+            </div>
             <div className="mb-4 w-91">
               <Field
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -132,11 +154,15 @@ const SignUp = () => {
 
             <div className='text-center'>
               <button
-                className="bg-blue-500 align-item-center hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-blue-500 align-item-center hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
+                style={{ fontSize: '17.5px', height: '37px', lineHeight: '5px' }}
+                title={'Click to Register'}
               >
                 Register
+                <FontAwesomeIcon icon={faPlay} className="text-green-300" style={{ width: '18px', height: '18px', marginLeft: '4px' }} />
               </button>
+              <ToastContainer />
             </div>
           </Form>
         )}

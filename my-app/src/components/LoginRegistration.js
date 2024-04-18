@@ -15,7 +15,7 @@ const LoginRegistration = () => {
       <div className="rounded-lg p-9 shadow-lg">
         {isSignIn ? (
           <SignIn />
-          
+
         ) : (
           <Registration />
         )}
@@ -23,10 +23,13 @@ const LoginRegistration = () => {
           {isSignIn ? "Don't have an account?" : 'Already have an account?'}
           <button
             onClick={toggleForm}
-            className="text-blue-700 ml-1 font-bold focus:outline-none"
+            className="text-blue-500 ml-1 font-bold focus:outline-none hover:text-blue-800" 
+            style={{fontSize: '17px'}}
+            title={isSignIn ? 'Click to Register' : 'Click to Login'}
           >
             {isSignIn ? 'Register' : 'Login'}
           </button>
+
         </p>
       </div>
     </div>
