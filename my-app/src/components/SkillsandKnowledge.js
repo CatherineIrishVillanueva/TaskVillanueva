@@ -124,7 +124,7 @@ const Projects = () => {
       <Header />
       <div className="gradient-grey h-screen w-screen relative flex justify-center overflow-hidden">
         <div>
-          <h1 className="animate-header text-4xl font-bold mb-4 text-center text-black mt-5 typing-text">Skills and Knowledge</h1>
+          <h1 className="animate-header text-4xl font-bold mb-4 text-center text-black mt-5">Skills and Knowledge</h1>
           <div className="container mx-auto pl-4 pr-4">
             <div className="flex justify-center mb-4">
               <button 
